@@ -1,0 +1,7 @@
+.headerNavBar{
+    display:flex;
+    margin: 0 56px;
+    height: 80px;
+    justify-content: space-between;
+    align-items: center;
+}

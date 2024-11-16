@@ -1,0 +1,199 @@
+body, html {
+    width: 100%;
+    color: ghostwhite;
+}
+
+#AccountSettingsPage {
+    height: 100%;
+    background-size: cover;
+}
+
+#TitleSection h1 {
+    font-size: 30pt;
+    font-style: italic;
+    font-weight: bold;
+    color:ghostwhite;
+    text-align: center;
+    margin-top: 0px;
+}
+
+#ProfilePicSection {
+    margin-left: 200px;
+    position: static;
+    height: 300px;
+    width: 500px;
+}
+
+#ProfilePicDisplay {
+    float: left;
+    width: 200px;
+}
+
+#CurrentProfilePic {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    float: left;
+    margin-top: 10px;
+    display: block;
+}
+
+#ProfilePicBlock {
+    margin-top: 5%;
+}
+
+#ProfilePicBlock h2 {
+    font-size: 20pt;
+    font-weight: 700;
+    font-style: italic;
+    text-decoration: underline solid ghostwhite;
+    position: relative;
+    text-align: left;
+    margin-left: 200px;
+    color: ghostwhite;
+}
+
+#ProfilePicCaption {
+    font-size: large;
+    position: relative;
+    text-align: left;
+    float: left;
+    color:ghostwhite;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    display: block;
+    width: 100%;
+}
+
+#ProfilePicCaption span{
+    display: block;
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold;
+    color:ghostwhite;
+}
+
+#UploadProfilePic {
+    position: relative;
+    width: 210px;
+    height: 80px;
+    text-align: left;
+    float: right;
+    padding-top: 20%;
+    font-size: 14pt;
+}
+
+#UploadProfilePic span{
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: left;
+    color:ghostwhite;
+}
+
+#editButton {
+    position: relative;
+    margin-left: 100px;
+    float: right;
+}
+
+#UserDetailsSection {
+    margin-left: 200px;
+    display: block;
+    width: 300px;
+}
+
+#UserDetailsSection h2 {
+    font-size: 20pt;
+    font-weight: 700;
+    font-style: italic;
+    position: relative;
+    text-align: left;
+    margin-top: 20px;
+    text-decoration: underline ghostwhite;
+    color:ghostwhite;
+}
+
+#UserDetailsSection p {
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: left;
+    color:ghostwhite;
+}
+
+#UserDetailsSection span {
+    font-weight: normal;
+    text-align: left;
+    color:ghostwhite;
+}
+
+#ExternalLinksSection {
+    margin-left: 200px;
+    position: relative;
+    width: 300px;
+}
+
+#ExternalLinksSection h2 {
+    font-size: 20pt;
+    font-weight: 700;
+    font-style: italic;
+    text-decoration: underline solid ghostwhite;
+    position: relative;
+    text-align: left;
+    color:ghostwhite;
+    margin-left: 0px;
+    width: 100%;
+}
+
+#ExternalLinksSection p {
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: left;
+    color:ghostwhite;
+}
+
+#ExternalLinksSection span {
+    font-weight: normal;
+    text-align: left;
+    color:ghostwhite;
+}
+
+#ExternalLinksSection p {
+    margin-bottom: 10px;
+}
+
+.editButton {
+    display: inline-block;
+    background-image: url("./imgs/edit.jpg");
+    background-size: 30px;
+    background-color: ghostwhite;
+    height: 30px;
+    width: 30px;
+}
+
+.TextInputButton {
+    width: 500px;
+    height: 50px;
+    text-align: left;
+    display: inline-block;
+}
+
+.TextInputButton p{
+    width: 250px;
+    float: left;
+}
+
+.TextInputButton button{
+    float: right;
+}
+
+.TextInputButton input{
+    float: left;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}

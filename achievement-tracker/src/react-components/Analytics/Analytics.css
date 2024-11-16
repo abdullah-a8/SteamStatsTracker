@@ -1,0 +1,282 @@
+body {
+    background: url("https://images.unsplash.com/photo-1465146633011-14f8e0781093?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80");
+    background-size: cover;
+    /* animation: animation 100s linear infinite; */
+}
+
+#AnalyticsPage {
+    color: ghostwhite;
+}
+
+#HeaderSection {
+    position: relative;
+    display: block;
+}
+
+#BodySection {
+    position: relative;
+    display: block;
+}
+
+#TitleSection {
+    position: relative;
+    top: 100px;
+    width: 100%;
+    min-width: 1200px;
+    min-height: 80px;
+}
+
+#StatsSection {
+    width: 60%;
+    margin-top: 7%;
+    margin-left: 20%;
+    min-width: 800px;
+}
+
+#StatsHeader {
+    position: relative;
+    display: block;
+    height: 100px;
+}
+
+#StatsUser {
+    float: left;
+}
+
+#StatsProfilePic {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 0px;
+}
+
+#StatsUserCaption {
+    position: relative;
+    float: right;
+}
+
+#StatsUserCaption p{
+    position: relative;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 16pt;
+    font-weight: bold;
+    border-bottom: 2px solid currentColor;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#StatsUserCaption span{
+    position: relative;
+    font-size: 14pt;
+    text-align: left;
+    margin-left: 20px;
+}
+
+#StatsReputation {
+    float: right;
+}
+
+#StatsReputation p{
+    font-size: 15pt;
+    margin-bottom: 10px;
+    border-bottom: 1px solid currentColor;
+}
+
+#StatsReputation span{
+    margin-top: 0px;
+    font-size: 24pt;
+    font-weight: bolder;
+    font-style: italic;
+}
+
+#ReputationContainer {
+    width: 150px;
+    height: 45px;
+}
+
+#ReputationContainer img {
+    float: left;
+    height: 50px;
+    width: auto;
+    animation: rotation 5s infinite linear;
+}
+
+.StatsRow{
+    margin-top: 20px;
+}
+
+#StatsRow1 {
+    position: relative;
+    display: block;
+}
+
+#StatsRow2 {
+    position: relative;
+    display: block;
+}
+
+.StatBoxLeft {
+    float: left;
+    width: 200px;
+}
+
+.StatBoxCenter {
+    display: inline-block;
+    width: 200px;
+}
+
+.StatBoxRight {
+    float: right;
+    width: 200px;
+}
+
+.StatsRow p{
+    margin-bottom: 0px;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16pt;
+    border-bottom: 1px solid currentColor;
+}
+
+.StatsRow span{
+    font-weight: 700;
+    font-size: 20pt;
+}
+
+#TableSection {
+    position: relative;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 5%;
+}
+
+#StatsTable {
+    background-color: ghostwhite;
+    color: black;
+    border-top: 2px #292929;
+    border-radius: 8px;
+    width: 100%;
+    min-width: 800px;
+}
+
+#StatsTable thead{
+    background-color: #292929;
+    color: ghostwhite;
+    border-top: 2px #292929;
+}
+
+#StatsTitle {
+    height: 50px;
+}
+
+#StatsTitle p{
+    width: fit-content;
+    font-size: 24pt;
+    font-weight: 700;
+    font-style: italic;
+    text-align: left;
+    border-bottom: 3px solid currentColor;
+    float: left;
+    display: inline;
+}
+
+#TotalStats {
+    margin-top: 20px;
+    text-align: left;
+    width: 800px;
+}
+
+#TotalStats p {
+    display: block;
+    text-align: left;
+    font-size: 16px;
+}
+
+#loadingIcon2 {
+    height: 35px;
+    width: auto;
+    float: left;
+    display: inline;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+#loadingIcon2 img {
+    height: 100%;
+    width: auto;
+    vertical-align: bottom;
+    animation: rotation 5s infinite linear;
+}
+
+#tableID {
+    width: 100px;
+    min-width: 50px;
+}
+
+#tableTitle {
+    width: 200px;
+    min-width: 200px;
+}
+
+#tableCompletion {
+    width: 125px;
+    min-width: 125px;
+}
+
+#tableUnlocked {
+    width: 125px;
+    min-width: 125px;
+}
+
+#tableTotal {
+    width: 125px;
+    min-width: 125px;
+}
+
+#tablePlaytime {
+    width: 125px;
+    min-width: 125px;
+}
+
+.tableHeader {
+    min-height: 50px;
+    height: 50px;
+}
+
+.tableCell {
+    min-height: 40px;
+    height: 40px;
+}
+
+.sort{
+    float: right;
+}
+
+.sort span{
+    margin-bottom: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15px;
+}
+
+.sortButton {
+    float: right;
+    height: 25px;
+    width: 22px;
+    margin-top: 3px;
+    padding: 0px;
+    vertical-align: middle;
+}
+
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+

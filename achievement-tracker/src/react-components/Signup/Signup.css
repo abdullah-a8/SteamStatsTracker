@@ -1,0 +1,98 @@
+body, html {
+    height: 100%;
+}
+
+#LoginPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    background: url("https://images.unsplash.com/photo-1465146633011-14f8e0781093?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80");
+    background-size: cover;
+}
+
+#SignupContainer {
+    width: 400px;
+    max-height: fit-content;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 15%;
+    position: absolute;
+    border-radius: 3%;
+    border-color: black;
+}
+
+#SignupContainer p{
+    margin-bottom: 0px;
+    margin-top: 15px;
+    margin-left: -15px;
+}
+
+.SignupField {
+    position: relative;
+    width: 200px;
+    height: 35px;
+    margin-top: 5px;
+    top: 5%;
+    margin-bottom: 4px;
+    margin-left: 10px;
+}
+
+.FieldContainer {
+    float: left;
+}
+
+.SignUpButton {
+    position: relative;
+    width: 100px;
+    margin-top: 10px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+.imgValidityCheck {
+    height: 25px;
+    width: auto;
+    float: right;
+}
+
+.imgValidityCheck img {
+    height: 100%;
+    width: auto;
+    margin: 8px;
+}
+
+#inputField4 {
+    margin-left: -35px;
+}
+
+.helpIcon {
+    height: 25px;
+    float: left;
+}
+
+.helpIcon img {
+    height: 100%;
+    width: auto;
+    margin: 10px;
+    margin-right: 0px;
+    cursor: pointer;
+}
+
+#helpText {
+    display: inline;
+    position: absolute;
+    color: black;
+    border: 1px solid steelblue;
+    border-radius: 10px;
+    background: skyblue;
+    font-size: 9pt;
+    text-align: center;
+    width: 125px;
+    bottom: 3px;
+    left: 3px;
+}

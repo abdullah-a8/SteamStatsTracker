@@ -1,0 +1,21 @@
+.user-bar {
+  background-color: rgb(209, 206, 206);
+  margin: 30px 20px;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+  min-width: 500px;
+  overflow: hidden;
+  color: black;
+}
+
+.user-bar-info {
+  float: left;
+}
+
+.user-bar button {
+  float: right;
+  padding: 5px;
+  margin: 5px;
+  font-size: 12px;
+}

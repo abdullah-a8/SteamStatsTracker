@@ -1,0 +1,19 @@
+.achievementContainer{
+    justify-content: space-evenly;
+    padding-left: 0px;
+    
+}
+
+.achievementContainer::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+#fullLength{
+    height: 100%;
+}
+
+#shrink{
+    height: 61%;
+    overflow: hidden;
+    overflow-y: scroll;
+}

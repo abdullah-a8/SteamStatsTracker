@@ -1,0 +1,14 @@
+.headerContainer{
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    height: 80px;
+}
+
+#homePage{
+    background: transparent;
+}
+
+#dashboard{
+    background: #292929;
+}

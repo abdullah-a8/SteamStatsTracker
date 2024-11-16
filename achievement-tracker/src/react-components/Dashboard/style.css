@@ -1,0 +1,241 @@
+.dashboard{
+    background: url("https://images.unsplash.com/photo-1465146633011-14f8e0781093?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80");
+    width: 100%;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    animation: animation 100s linear infinite;
+}
+
+@keyframes animation {
+    100%{
+     background-position:0px -3000px;
+   }
+ }
+
+.dashboard::-webkit-scrollbar { 
+    display: none;  
+}
+
+.left{
+    float: left;
+    width: 25%;
+    position: fixed;
+    top: 120px;
+    height: 100vh;
+    left: 2%;
+}
+
+.bannerLeftLinkGroup{
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    margin-top: 5px;
+}
+
+.bannerUserInfo{
+    display: flex;
+    flex-direction: row;
+    width:90%;
+    color: white;
+    justify-content: space-between;
+}
+
+#bannerUserName, #bannerUserUID{
+    width: fit-content;
+}
+
+
+.bannerReputation{
+    color:white;
+    font-size: 13px;
+}
+
+.middle{
+    display: inline-block;
+    width: 36%;
+    position: relative;
+    top: 120px;
+    height: 100vh;
+}
+
+.right{
+    right:2%;
+    width: 25%;
+    position: fixed;
+    top: 120px;
+    height: 100vh;
+}
+
+
+.middle::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.group{
+    display: flex;
+    flex-direction: row;
+}
+
+.rightBannerTitle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height:fit-content;
+    align-items: center;
+    width: 90%;
+}
+
+@media screen and (max-width: 840px) {
+    .rightBannerTitle {
+      flex-direction: column;
+    }
+  }
+
+
+.rightBannerTitleName{
+    font-size: 25px;
+    width: fit-content;
+    color:white;
+    margin: 0px;
+}
+
+.addFriendForm{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+    height: 40px;
+
+}
+
+.addFriendInput{
+    outline: none;
+    height: 80%;
+    border: 2px solid grey;
+    border-radius: 25px;
+    padding-left: 10px;
+    font-size: 15px;
+    width:80%;
+}
+
+.addFriendButton{
+    outline-style: none;
+    cursor: pointer;
+    border: none;
+    width: 50px;
+    border-radius: 10px;
+    height: 70%;
+    margin-left: 5px;
+    padding: 0px 1px;
+    border: 1px solid grey;
+}
+
+.addFriendButton:hover{
+    background-color: #525252;
+    color: white;
+}
+
+#DashboardSearch {
+    float: left;
+}
+
+#DashboardSort {
+    float: right;
+}
+
+.searchGame{
+    height: 60px;
+    margin-bottom: 5px;
+}
+
+.searchGameInput{
+    outline: none;
+    height: 100%;
+    width: 90%;
+    border: 2px solid grey;
+    border-radius: 25px;
+    padding-left:10px;
+    font-size: 25px;
+    left: 0px;
+}
+
+.achivementProgress{
+    color:white;
+    font-size: 15px;
+    top:0px;
+    position: absolute;
+}
+.gameInfo{
+    color:white;
+    font-size: 15px;
+    bottom:0px;
+    position: absolute;
+}
+
+#loadingIcon {
+    height: 50px;
+    width: auto;
+    vertical-align: center;
+}
+
+#loadingIcon img {
+    height: 100%;
+    width: auto;
+    animation: rotation 5s infinite linear;
+}
+
+#sortHeader {
+    width: 100px;
+    height: 30px;
+}
+
+#sortTitle {
+    display: block;
+    height: 15px;
+    width: 100px;
+    font-size: 15px;
+}
+
+#sortTypes {
+    display: block;
+    height: 15px;
+    width: 100px;
+    font-size: 12px;
+}
+
+#sortButtons {
+    height: 30px;
+}
+
+.sortType {
+    text-align: center;
+    width: 50px;
+}
+
+#alphabetical {
+    float: left;
+}
+
+#percentage {
+    float: right;
+}
+
+.sortD {
+    height: 22px;
+    width: 22px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}

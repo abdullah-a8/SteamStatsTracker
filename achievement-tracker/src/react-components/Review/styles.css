@@ -1,0 +1,59 @@
+.review {
+  background-color: rgb(209, 206, 206);
+  margin: 30px 30px;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+  min-width: 500px;
+  color: black;
+}
+
+.review h2 {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+
+.review-info-bar {
+  display: inline-block;
+  border-top: 2px solid black;
+  width: 100%;
+}
+
+.review-info-bar span {
+  margin-right: 4%;
+}
+
+.review-info-bar button {
+  padding: 5px;
+  margin: 5px;
+  font-size: 12px;
+  min-width: 50px;
+}
+
+.review-vote-num {
+  font-family:'Courier New', Courier, monospace;
+}
+
+.collapse-button {
+  display: block;
+  width: 150px;
+  background-color: rgb(138, 138, 138);
+  margin: 5px;
+  padding: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border-radius: 10px;
+  color: black;
+  font-size: 12px;
+}
+
+.collapsed-content {
+  display: none;
+}
+
+.expanded-content {
+  display: block;
+}
+
+.review-content {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
