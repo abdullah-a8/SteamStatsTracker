@@ -67,7 +67,7 @@ async function getLoggedInUser(req, res, next) {
 }
 
 // route to change a users password
-// using post because patch is fucking retarded
+// using post because patch is retardeclesard
 router.post('/users/changepassword', mongoChecker, getLoggedInUser, async (req, res) => {
     let user = req.user
     try {
