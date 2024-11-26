@@ -6,7 +6,8 @@ const API_HOST = ENV.api_host;
 
 // Get the reputation of the current user
 export const getReputation = (component) => {
-    const url = `${API_HOST}/reputation`;
+    const userName = component.state.userName; // Ensure userName is available
+    const url = `${API_HOST}/api/user/reputation/${encodeURIComponent(userName)}`;
 
     fetch(url, {
         method: 'GET',
@@ -16,7 +17,10 @@ export const getReputation = (component) => {
             if (res.status === 200) {
                 return res.json();
             } else {
-                throw new Error('Could not get reputation');
+                res.text().then(text => {
+                    console.log(`Error fetching reputation: ${text}`);
+                    throw new Error('Could not get reputation');
+                });
             }
         })
         .then(json => {
@@ -30,14 +34,15 @@ export const getReputation = (component) => {
 
 // Update the reputation of a user
 export const updateReputation = (component, reputation) => {
-    const url = `${API_HOST}/reputation`;
-    const data = { reputation: reputation };
+    const userName = component.state.userName; // Ensure userName is available
+    const url = `${API_HOST}/api/user/updatereputation/${encodeURIComponent(userName)}`;
+    const data = { reputation: reputation }; // Server expects 'reputation' in the body
 
     fetch(url, {
-        method: 'POST',
+        method: 'PATCH', // Changed from POST to PATCH
         body: JSON.stringify(data),
         headers: {
-            Accept: 'application/json, text/plain, */*',
+            'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
         },
         credentials: 'include', // Include credentials
@@ -46,7 +51,9 @@ export const updateReputation = (component, reputation) => {
             if (res.status === 200) {
                 console.log('Reputation updated');
             } else {
-                console.log('Error: Cannot update reputation');
+                res.text().then(text => {
+                    console.log(`Error updating reputation: ${text}`);
+                });
             }
         })
         .catch(error => {
