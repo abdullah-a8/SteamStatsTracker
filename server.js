@@ -1,85 +1,79 @@
-// The main server file for the backend
+// server.js
+
 "use strict";
 
 require('dotenv').config();
 
 /* Server environment setup */
-// To run in development mode, run normally: node server.js
-// To run in development with the test user logged in the backend, run: TEST_USER_ON=true node server.js
-// To run in production mode, run in terminal: NODE_ENV=production node server.js
-const env = process.env.NODE_ENV // read the environment variable (will be 'production' in production mode)
+const env = process.env.NODE_ENV; // read the environment variable (will be 'production' in production mode)
 
 const log = console.log;
-const path = require('path')
+const path = require('path');
 const express = require("express");
 const app = express();
-const socket = require("socket.io")
+const socket = require("socket.io");
 
-// enable CORS if in development, for React local development server to connect to the web server.
-const cors = require('cors')
-if (env !== 'production') {
-    app.use(cors())
-}
+// Import required modules
+const cors = require('cors');
 
-// mongoose and mongo connection
-const { mongoose } = require("./db/mongoose");
+// Configure CORS options
+const corsOptions = {
+    origin: 'http://localhost:3000', // Your front-end URL
+    credentials: true,               // Allow cookies (credentials) to be sent
+    optionsSuccessStatus: 200        // Some legacy browsers choke on 204
+};
 
-// import the mongoose models
-const { User } = require("./models/user");
-const { Chat } = require("./models/chat");
-const { storeMessage } = require("./routes/helpers/messages")
-// to validate object IDs
-const { ObjectID } = require("mongodb");
+// Apply CORS middleware before defining routes or other middleware
+app.use(cors(corsOptions));
 
-// body-parser: middleware for parsing HTTP JSON body into a usable object
-const bodyParser = require('body-parser')
-app.use(bodyParser.json({ limit: '50mb' }))
-app.use(bodyParser.urlencoded({ extended: true }))
+// Body-parser middleware
+const bodyParser = require('body-parser');
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-
-/*** Session handling **************************************/
-// express-session for managing user sessions
+// Session handling
 const session = require("express-session");
-const MongoStore = require('connect-mongo') // to store session information on the database in production
-// Create a session and session cookie
+const MongoStore = require('connect-mongo');
 app.use(session({
-    secret: process.env.SESSION_SECRET || "our hardcoded secret", // make a SESSION_SECRET environment variable when deploying (for example, on heroku)
+    secret: process.env.SESSION_SECRET || "your-secret-key", // Replace with your own secret
     resave: false,
     saveUninitialized: false,
     cookie: {
         expires: 6000000,
-        httpOnly: true
+        httpOnly: true,
+        secure: false, // Should be true in production with HTTPS
     },
-    // store the sessions on the database in production
     store: env === 'production' ? MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/steamTracker'
-    }) : null
+        mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/steamTracker',
+    }) : null,
 }));
 
+// Mongoose and Mongo connection
+const { mongoose } = require("./db/mongoose");
 
-/*** Webpage routes below **********************************/
-app.use(require('./routes/login'))
-app.use(require('./routes/steam'))
+// Import the mongoose models
+const { User } = require("./models/user");
+const { Chat } = require("./models/chat");
+const { storeMessage } = require("./routes/helpers/messages");
+// To validate object IDs
+const { ObjectID } = require("mongodb");
 
-//for adding and getting friend
-app.use(require('./routes/friend'))
-
-app.use(require('./routes/chat'))
-
-app.use(require('./routes/reputation'))
-
-app.use(require('./routes/review'))
-app.use(require('./routes/voteRecord'))
-app.use(require('./routes/user'))
-
-app.use(require('./routes/profilePic'))
+// Import routes
+app.use(require('./routes/login'));
+app.use(require('./routes/steam'));
+app.use(require('./routes/friend'));
+app.use(require('./routes/chat'));
+app.use(require('./routes/reputation'));
+app.use(require('./routes/review'));
+app.use(require('./routes/voteRecord'));
+app.use(require('./routes/user'));
+app.use(require('./routes/profilePic'));
 
 // Serve the build
 app.use(express.static(path.join(__dirname, "/achievement-tracker/build")));
 
 // All routes other than above will go to index.html
 app.get("*", (req, res) => {
-    // send index.html
     res.sendFile(path.join(__dirname, "/achievement-tracker/build/index.html"));
 });
 
@@ -90,25 +84,25 @@ const server = app.listen(port, () => {
     log(`Listening on port ${port}...`);
 });
 
-
-const io = socket(server)
+// Socket.io setup
+const io = socket(server);
 io.on('connection', (socket) => {
-    console.log("user socket connected ...");
+    console.log("User socket connected...");
 
     socket.on('room', (data) => {
-        socket.join(data.chatRoomId)
-        console.log(`Username: ${data.name} join Room: ${data.chatRoomId}`)
-        socket.emit('joined', data.chatRoomId)
-    })
+        socket.join(data.chatRoomId);
+        console.log(`Username: ${data.name} joined Room: ${data.chatRoomId}`);
+        socket.emit('joined', data.chatRoomId);
+    });
 
     socket.on('chat', (obj) => {
-        //need to store on database
-        storeMessage(socket, obj)
-        socket.to(obj.id).emit("chat", obj.data)
-    })
+        // Need to store on database
+        storeMessage(socket, obj);
+        socket.to(obj.id).emit("chat", obj.data);
+    });
 
     socket.on('close', () => {
-        socket.disconnect(0)
-        console.log('user socket disconnected ...');
+        socket.disconnect(0);
+        console.log('User socket disconnected...');
     });
 });

@@ -1,50 +1,55 @@
-import ENV from './../config.js'
-const API_HOST = ENV.api_host
+// src/actions/reputation.js
 
-export const getReputation = (dashComp) => {
-    const url = `${API_HOST}/api/user/reputation/${dashComp.state.userName}`
+// Environment configurations
+import ENV from './../config.js';
+const API_HOST = ENV.api_host;
 
-    fetch(url)
+// Get the reputation of the current user
+export const getReputation = (component) => {
+    const url = `${API_HOST}/reputation`;
+
+    fetch(url, {
+        method: 'GET',
+        credentials: 'include', // Include credentials
+    })
         .then(res => {
             if (res.status === 200) {
-                return res.json()
+                return res.json();
             } else {
-                console.log("Error: Could not get reputation")
+                throw new Error('Could not get reputation');
             }
         })
         .then(json => {
-            dashComp.setState({ reputation: json.reputation })
+            component.setState({ reputation: json.reputation });
         })
         .catch(error => {
-            console.log(error);
+            console.log('Error fetching reputation:', error);
+            // Optionally, you can display an alert or handle the error in the UI
         });
-}
+};
 
-export const updateReputation = (page, reputation) => {
-    const url = `${API_HOST}/api/user/updatereputation/${page.state.userName}`
-    const username = page.state.userName
-    const obj = {
-        username: username,
-        reputation: reputation
-    }
+// Update the reputation of a user
+export const updateReputation = (component, reputation) => {
+    const url = `${API_HOST}/reputation`;
+    const data = { reputation: reputation };
 
-    const request = new Request(url, {
-        method: 'PATCH',
-        body: JSON.stringify(obj),
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
         headers: {
-            "Accept": "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
+            Accept: 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include credentials
     })
-
-    fetch(request)
-        .then(function (res) {
+        .then(res => {
             if (res.status === 200) {
-                console.log("Reputation updated")
+                console.log('Reputation updated');
             } else {
-                console.log("Error: Cannot update reputation")
+                console.log('Error: Cannot update reputation');
             }
-        }).catch((error) => {
-            console.log(error)
         })
-}
+        .catch(error => {
+            console.log('Error updating reputation:', error);
+        });
+};

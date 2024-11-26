@@ -19,16 +19,32 @@ const log = console.log
 
 class Signup extends React.Component {
 
-  state = {
-    userName: '',
-    passWord: '',
-    passWord2: '',
-    steamName: '',
-    valid_username: false,
-    valid_steamID: false,
-    valid_pw1: false,
-    valid_pw2: false,
-    showHelp: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      userName: '',
+      passWord: '',
+      passWord2: '',
+      steamName: '',
+      valid_username: false,
+      valid_steamID: false,
+      valid_pw1: false,
+      valid_pw2: false,
+      showHelp: false,
+      redirect: null
+    };
+    this.usernameCheckTimeout = null;
+    this.steamIDCheckTimeout = null;
+  }
+
+  componentWillUnmount() {
+    // Clear any pending timeouts when the component unmounts
+    if (this.usernameCheckTimeout) {
+      clearTimeout(this.usernameCheckTimeout);
+    }
+    if (this.steamIDCheckTimeout) {
+      clearTimeout(this.steamIDCheckTimeout);
+    }
   }
 
   handleInputChange = (event) => {
@@ -38,72 +54,96 @@ class Signup extends React.Component {
 
     this.setState({ [name]: value })
 
-    // if the username changed, check if the new one is already in use
-    // and disable the signup button if it is
+    // Debounce the username validation
     if (name === 'userName') {
-      fetch(`/usernames/${value}`)
-        .then(res => {
-          if (res.status === 404 && value.length > 0) {
-            this.setState({ valid_username: true })
-            if (value.toLowerCase().startsWith('admin')) {
-              this.setState({ valid_username: false })
-            }
-          } else if (res.status === 200 || value.length < 1) {
-            this.setState({ valid_username: false })
-          }
-        })
+      if (this.usernameCheckTimeout) {
+        clearTimeout(this.usernameCheckTimeout);
+      }
+      this.usernameCheckTimeout = setTimeout(() => {
+        if (value.length > 0) {
+          fetch(`/usernames/${encodeURIComponent(value)}`)
+            .then(res => {
+              if (res.status === 404) {
+                if (value.toLowerCase().startsWith('admin')) {
+                  this.setState({ valid_username: false });
+                } else {
+                  this.setState({ valid_username: true });
+                }
+              } else if (res.status === 200) {
+                this.setState({ valid_username: false });
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        } else {
+          this.setState({ valid_username: false });
+        }
+      }, 500); // Adjust the delay (in milliseconds) as needed
     }
 
-    // check that a valid steam ID has been entered
+    // Debounce the Steam ID validation
     if (name === 'steamName') {
-      fetch(`/steamapi/userinfo/?key=${ENV.steam_key}&steamids=${value}`)
-        .then(res => { return res.json() })
-        .then(json => {
-          if (json.response.players.length > 0 && json.response.players[0].communityvisibilitystate === 3) {
-            this.setState({ valid_steamID: true })
-          } else {
-            this.setState({ valid_steamID: false })
-          }
-        })
+      if (this.steamIDCheckTimeout) {
+        clearTimeout(this.steamIDCheckTimeout);
+      }
+      this.steamIDCheckTimeout = setTimeout(() => {
+        if (value.length > 0) {
+          fetch(`/steamapi/userinfo/?key=${ENV.steam_key}&steamids=${encodeURIComponent(value)}`)
+            .then(res => res.json())
+            .then(json => {
+              if (json.response && json.response.players && json.response.players.length > 0 && json.response.players[0].communityvisibilitystate === 3) {
+                this.setState({ valid_steamID: true });
+              } else {
+                this.setState({ valid_steamID: false });
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        } else {
+          this.setState({ valid_steamID: false });
+        }
+      }, 500); // Adjust the delay as needed
     }
 
-    // set states for passwords
+    // Validate password fields
     if (name === 'passWord') {
       if (value.length >= 4) {
-        this.setState({ valid_pw1: true })
+        this.setState({ valid_pw1: true });
       } else {
-        this.setState({ valid_pw1: false })
+        this.setState({ valid_pw1: false });
       }
       if (value === this.state.passWord2) {
-        this.setState({ valid_pw2: true })
+        this.setState({ valid_pw2: true });
       } else {
-        this.setState({ valid_pw2: false })
+        this.setState({ valid_pw2: false });
       }
     }
     if (name === 'passWord2') {
       if (value === this.state.passWord) {
-        this.setState({ valid_pw2: true })
+        this.setState({ valid_pw2: true });
       } else {
-        this.setState({ valid_pw2: false })
+        this.setState({ valid_pw2: false });
       }
     }
   }
 
-  // some checks for signup and handling of the signup action
+  // Handle the signup action
   handleSignup = () => {
-    if (this.state.userName == '' ||
-      this.state.passWord == '' ||
-      this.state.steamName == '') {
-      alert('some input fields are empty')
-      return
+    if (this.state.userName === '' ||
+      this.state.passWord === '' ||
+      this.state.steamName === '') {
+      alert('Some input fields are empty');
+      return;
     }
     if (this.state.passWord !== this.state.passWord2) {
-      alert('Passwords do not match')
-      return
+      alert('Passwords do not match');
+      return;
     }
     if (this.state.passWord.length < 4) {
-      alert('password must be at least 4 characters')
-      return
+      alert('Password must be at least 4 characters');
+      return;
     }
     const requestOptions = {
       method: 'POST',
@@ -115,16 +155,19 @@ class Signup extends React.Component {
         steamName: this.state.steamName
       })
     };
-    // post the request to the backend to create an account
+    // Post the request to the backend to create an account
     fetch('/users', requestOptions)
       .then(res => {
         if (res.status === 400) {
-          alert('server error: account not created')
+          alert('Server error: Account not created');
         } else if (res.status === 200) {
-          alert('Account creation successful! Please proceed to log in.')
-          this.setState({ redirect: '/Login' })
+          alert('Account creation successful! Please proceed to log in.');
+          this.setState({ redirect: '/Login' });
         }
       })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -158,7 +201,7 @@ class Signup extends React.Component {
                 autoFocus></input>
             </div>
             <div className="imgValidityCheck">
-              <img src={this.state.valid_username ? checkmark : cross} />
+              <img src={this.state.valid_username ? checkmark : cross} alt="Username validity" />
             </div>
           </div>
 
@@ -172,7 +215,7 @@ class Signup extends React.Component {
                 placeholder='Create a password'></input>
             </div>
             <div className="imgValidityCheck">
-              <img src={this.state.valid_pw1 ? checkmark : cross} />
+              <img src={this.state.valid_pw1 ? checkmark : cross} alt="Password validity" />
             </div>
           </div>
 
@@ -186,7 +229,7 @@ class Signup extends React.Component {
                 placeholder='Confirm password'></input>
             </div>
             <div className="imgValidityCheck">
-              <img src={this.state.valid_pw1 && this.state.valid_pw2 ? checkmark : cross} />
+              <img src={this.state.valid_pw1 && this.state.valid_pw2 ? checkmark : cross} alt="Password match validity" />
             </div>
           </div>
 
@@ -196,7 +239,7 @@ class Signup extends React.Component {
                 onMouseEnter={() => { this.setState({ showHelp: true }) }}
                 onMouseOut={() => { this.setState({ showHelp: false }) }}
                 onClick={() => { window.open("/SteamInfo") }}
-                name="helpIcon" />
+                name="helpIcon" alt="Help icon" />
             </div>
             <div className="FieldContainer">
               <input className="SignupField"
@@ -207,7 +250,7 @@ class Signup extends React.Component {
                 placeholder='Enter Steam ID'></input>
             </div>
             <div className="imgValidityCheck">
-              <img src={this.state.valid_steamID ? checkmark : cross} />
+              <img src={this.state.valid_steamID ? checkmark : cross} alt="Steam ID validity" />
             </div>
           </div>
 

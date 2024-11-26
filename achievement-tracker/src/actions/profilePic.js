@@ -1,45 +1,58 @@
-import ENV from './../config.js'
-const API_HOST = ENV.api_host
+// src/actions/profilePic.js
 
-export const storeImage = async (Comp) => {
-    const url = `${API_HOST}/api/uploadImage/${Comp.state.userName}`
-    const binaryFile = Comp.state.uploadImage
-    const imageObject = { image: binaryFile }
+// Environment configurations
+import ENV from './../config.js';
+const API_HOST = ENV.api_host;
 
-    const request = new Request(url, {
-        method: 'PATCH',
-        body: JSON.stringify(imageObject),
+// Update the profile image for the current user
+export const storeImage = async (component) => {
+    const url = `${API_HOST}/profilePic`;
+    const imageData = component.state.uploadImage;
+    const data = { profilePic: imageData };
+
+    await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
         headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
+            Accept: 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include credentials
     })
-    await fetch(request)
         .then(res => {
             if (res.status === 200) {
-                Comp.setState({ image: binaryFile, uploadImage: "" })
+                component.setState({ image: imageData, uploadImage: '' });
+                alert('Profile picture updated successfully');
             } else {
-                alert("Could not update profile picture")
+                alert('Could not update profile picture');
             }
         })
+        .catch(error => {
+            console.log('Error updating profile picture:', error);
+            alert('Error updating profile picture');
+        });
+};
 
-}
+// Get the profile image for a user
+export const getImage = async (username, component) => {
+    const url = `${API_HOST}/profilePic/${encodeURIComponent(username)}`;
 
-export const getImage = async (userName, Comp) => {
-    const url = `${API_HOST}/api/image/${userName}`
-
-    await fetch(url)
+    await fetch(url, {
+        method: 'GET',
+        credentials: 'include', // Include credentials
+    })
         .then(res => {
             if (res.status === 200) {
-                return res.json()
+                return res.json();
             } else {
-                alert("Cannot get Profile Images")
+                throw new Error('Cannot get profile image');
             }
         })
         .then(json => {
-            Comp.setState({ image: json.image })
+            component.setState({ image: json.profilePic });
         })
         .catch(error => {
-            console.log(error);
+            console.log('Error fetching profile image:', error);
+            alert('Cannot get profile image');
         });
-}
+};

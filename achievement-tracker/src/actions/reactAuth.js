@@ -1,13 +1,18 @@
+// reactAuth.js
+
 // Functions to help with user authentication
 
-// environment configurations
-import ENV from '../config.js'
-const API_HOST = ENV.api_host
+// Environment configurations
+import ENV from '../config.js';
+const API_HOST = ENV.api_host;
 
 // Send a request to check if a user is logged in through the session cookie
 export const checkSession = (app) => {
     const url = `${API_HOST}/users/current`;
-    fetch(url)
+    fetch(url, {
+        method: 'GET',
+        credentials: 'include', // Include credentials to send cookies
+    })
         .then(res => {
             if (res.status === 200) {
                 return res.json();
@@ -19,7 +24,7 @@ export const checkSession = (app) => {
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log('Error checking session:', error);
         });
 };
 
@@ -27,30 +32,36 @@ export const checkSession = (app) => {
 export const login = (loginParams, app) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/users/login`, {
-        method: "post",
+        method: "POST",
         body: JSON.stringify(loginParams),
         headers: {
             Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
+            "Content-Type": "application/json",
+        },
+        credentials: 'include', // Include credentials to send cookies
     });
     // Send the request with fetch()
     fetch(request)
         .then(res => {
             if (res.status === 200) {
                 return res.json();
-            } else if (res.status === 404) {
-                alert('username or password incorrect')
+            } else if (res.status === 401 || res.status === 404) {
+                alert('Username or password incorrect');
+                return null;
+            } else {
+                alert('An error occurred during login');
+                return null;
             }
         })
         .then(json => {
             if (json && json.currentUser !== undefined) {
                 app.setState({ currentUser: json.currentUser });
-                localStorage.setItem('currentUser', json.currentUser)
+                localStorage.setItem('currentUser', json.currentUser);
+                // Optionally, redirect to dashboard
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log('Error during login:', error);
         });
 };
 
@@ -58,24 +69,25 @@ export const login = (loginParams, app) => {
 export const changePassword = (newPassword) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/users/changepassword`, {
-        method: "post",
+        method: "POST",
         body: JSON.stringify({ "newPassword": newPassword }),
         headers: {
             Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
+            "Content-Type": "application/json",
+        },
+        credentials: 'include', // Include credentials
     });
     // Send the request with fetch()
     fetch(request)
         .then(res => {
             if (res.status === 201) {
-                alert("password changed successfully")
+                alert("Password changed successfully");
             } else {
-                alert('password change failed')
+                alert('Password change failed');
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log('Error changing password:', error);
         });
 };
 
@@ -83,15 +95,18 @@ export const changePassword = (newPassword) => {
 export const logout = (app) => {
     const url = `${API_HOST}/users/logout`;
 
-    fetch(url)
+    fetch(url, {
+        method: 'GET',
+        credentials: 'include', // Include credentials
+    })
         .then(res => {
             app.setState({
                 currentUser: null,
-                message: { type: "", body: "" }
+                message: { type: "", body: "" },
             });
-            localStorage.clear()
+            localStorage.clear();
         })
         .catch(error => {
-            console.log(error);
+            console.log('Error during logout:', error);
         });
 };
