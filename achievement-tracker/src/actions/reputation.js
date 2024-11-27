@@ -17,7 +17,8 @@ export const getReputation = (component) => {
             if (res.status === 200) {
                 return res.json();
             } else {
-                res.text().then(text => {
+                // Added 'return' here to properly handle the Promise chain
+                return res.text().then(text => {
                     console.log(`Error fetching reputation: ${text}`);
                     throw new Error('Could not get reputation');
                 });
@@ -51,8 +52,10 @@ export const updateReputation = (component, reputation) => {
             if (res.status === 200) {
                 console.log('Reputation updated');
             } else {
-                res.text().then(text => {
+                // Added 'return' here to properly handle the Promise chain
+                return res.text().then(text => {
                     console.log(`Error updating reputation: ${text}`);
+                    throw new Error('Could not update reputation');
                 });
             }
         })
