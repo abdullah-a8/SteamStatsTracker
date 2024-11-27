@@ -16,7 +16,7 @@ router.get("/api/user/reputation/:userName", mongoChecker, ensureAuthenticated, 
         }
         res.send({ reputation: user.reputation })
     } catch (error) {
-        log(error)
+        console.log(error)
         res.status(500).send('Internal Server Error')
     }
 })
@@ -34,7 +34,7 @@ router.patch("/api/user/updatereputation/:username", mongoChecker, ensureAuthent
         if (isMongoError(error)) {
             res.status(500).send('Internal server error')
         } else {
-            log(error)
+            console.log(error)
             res.status(400).send('Bad Request')
         }
     }

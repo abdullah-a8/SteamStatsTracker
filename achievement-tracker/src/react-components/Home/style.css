@@ -1,8 +1,5 @@
 .home{
-    /*background: url(https://images.unsplash.com/photo-1544306094-e2dcf9479da3) no-repeat;
-    background-size: cover;
-    height: 100vh;*/
-    background: url("https://images.unsplash.com/photo-1465146633011-14f8e0781093?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3450&q=80");
+    background: url("https://images.unsplash.com/photo-1642355008521-236f1d29d0a8?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
 
     height: 100vh;
     animation: animation 100s linear infinite;
