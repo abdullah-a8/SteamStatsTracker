@@ -25,7 +25,7 @@ export const storeImage = async (component) => {
                 component.setState({ image: imageData, uploadImage: '' });
                 alert('Profile picture updated successfully');
             } else {
-                res.text().then(text => {
+                return res.text().then(text => { // Added 'return' here
                     console.log(`Error updating profile picture: ${text}`);
                     alert('Could not update profile picture');
                 });
@@ -49,7 +49,7 @@ export const getImage = async (username, component) => {
             if (res.status === 200) {
                 return res.json();
             } else {
-                res.text().then(text => {
+                return res.text().then(text => { // Added 'return' here
                     console.log(`Error fetching profile image: ${text}`);
                     throw new Error('Cannot get profile image');
                 });
