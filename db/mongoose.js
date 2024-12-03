@@ -11,4 +11,9 @@ mongoose.connect(mongoURI)
       console.error('MongoDB connection error:', err);
   });
 
+// Handle connection errors globally
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+
 module.exports = { mongoose };
