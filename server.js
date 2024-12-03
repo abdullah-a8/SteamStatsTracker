@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 app.use(session({
-    secret: process.env.SESSION_SECRET || "your-secret-key", // Replace with your own secret
+    secret: process.env.SESSION_SECRET || "secret-key",
     resave: false,
     saveUninitialized: false,
     cookie: {
