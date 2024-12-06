@@ -138,14 +138,102 @@ This project is my semester-long assignment for the Database Systems course. Itâ
 ### **Step 7: Admin Privileges**  
 - The admin can manage the platform efficiently by removing unwanted user accounts and reviews.
 
+## **Overview of API Routes**  
+
+### **Chat**  
+- **GET** `{host}/api/chat/:userName/:friendName`:  
+  Returns a list of messages exchanged between the logged-in user (`userName`) and their friend (`friendName`).  
+  - Example response:  
+    ```json
+    [
+      {"from": "userName", "message": "Hi!", "timestamp": "2024-12-06T10:00:00Z"},
+      {"from": "friendName", "message": "Hello!", "timestamp": "2024-12-06T10:01:00Z"}
+    ]
+    ```  
+- **POST Messages**:  
+  Messages are sent via `socket.io` directly to the backend and saved to MongoDB.  
+
+### **Friend Management**  
+- **GET** `{host}/api/friends/:userName`:  
+  Retrieves the user's friend list and pending friend requests.  
+- **POST** `{host}/api/friends/:userName`:  
+  Sends a friend request to `friendName`.  
+- **DELETE** `{host}/api/friends/delete`:  
+  Removes a friend and deletes the chat history.  
+- **PATCH** `{host}/api/friends/accept`:  
+  Accepts a friend request.  
+- **PATCH** `{host}/api/friends/decline`:  
+  Declines a friend request.  
+
+### **Authentication**  
+- **POST** `{host}/users`:  
+  Creates a new user account.  
+- **POST** `{host}/users/changepassword`:  
+  Updates the current user's password.  
+- **GET** `{host}/users/joindate/:username`:  
+  Returns the user's join date.  
+- **GET** `{host}/usernames/:username`:  
+  Checks if a username exists.  
+- **POST** `{host}/users/login`:  
+  Logs in the user and sets session parameters.  
+- **GET** `{host}/users/current`:  
+  Retrieves the current user's ID and username.  
+- **GET** `{host}/users/logout`:  
+  Logs out the user and destroys the session.  
+
+### **Profile Picture**  
+- **GET** `{host}/api/image/:userName`:  
+  Retrieves the user's profile picture.  
+- **PATCH** `{host}/api/uploadImage/:userName`:  
+  Updates the user's profile picture.  
+
+### **Reputation**  
+- **GET** `{host}/api/user/reputation/:userName`:  
+  Retrieves the user's reputation score.  
+- **PATCH** `{host}/api/user/updatereputation/:username`:  
+  Updates the user's reputation score.  
+
+### **Reviews**  
+- **POST** `/api/reviews`:  
+  Adds a new review.  
+- **GET** `/api/reviews`:  
+  Retrieves all reviews.  
+- **PATCH** `/api/reviews/:id`:  
+  Modifies upvotes, downvotes, or reports for a specific review.  
+- **PATCH** `/api/reviews/:author/:reputation`:  
+  Updates the author's name and reputation in a review.  
+- **DELETE** `/api/reviews/:id`:  
+  Deletes a specific review.  
+
+### **Steam Integration**  
+- **GET** `{host}/steamapi/userinfo`:  
+  Retrieves user account info from Steam.  
+- **GET** `{host}/steamapi/usergames`:  
+  Retrieves the user's games info.  
+- **GET** `{host}/steamapi/games`:  
+  Retrieves stats for a specific game.  
+- **GET** `{host}/steamapi/game`:  
+  Retrieves general achievement information for a game.  
+
+### **User Management**  
+- **GET** `/api/users`:  
+  Retrieves all users in the database.  
+- **DELETE** `/api/users/:username`:  
+  Deletes a user by username.  
+
+### **Vote Records**  
+- **POST** `/api/voteRecords`:  
+  Adds a new vote record for a review.  
+- **GET** `/api/voteRecords`:  
+  Retrieves all vote records.  
+- **PATCH** `/api/voteRecords/:username/:reviewId`:  
+  Updates a user's vote for a review.  
+- **DELETE** `/api/voteRecords/:username`:  
+  Deletes all vote records for a user.  
+- **DELETE** `/api/voteRecords/:username/:reviewId`:  
+  Deletes a vote record for a specific review.
+
 ## Contributers
 *BSCS23109* - **Muhammad Abdullah Amin**  
 *BSCS23016* - **Muhamamd Subhan Amir**  
-*BSCS23082* - **Bilal Haroon**  
-
-
-
-
-
-
-
+*BSCS23082* - **Bilal Haroon** 
