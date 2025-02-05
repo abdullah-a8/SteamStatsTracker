@@ -235,5 +235,3 @@ This project is my semester-long assignment for the Database Systems course. Itâ
 
 ## Contributers
 *BSCS23109* - **Muhammad Abdullah Amin**  
-*BSCS23016* - **Muhamamd Subhan Amir**  
-*BSCS23082* - **Bilal Haroon** 
